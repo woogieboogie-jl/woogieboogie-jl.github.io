@@ -8,11 +8,11 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 04 Jun 2021 22:26:01 +0900</lastBuildDate><atom:link href="https://woogieboogie-jl.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Markdown Syntax</title>
-      <link>https://woogieboogie-jl.github.io/dev/markdown-syntax/</link>
+      <title>Markdown Syntax - Basics</title>
+      <link>https://woogieboogie-jl.github.io/dev/markdown-syntax-basics/</link>
       <pubDate>Fri, 04 Jun 2021 22:26:01 +0900</pubDate>
       
-      <guid>https://woogieboogie-jl.github.io/dev/markdown-syntax/</guid>
+      <guid>https://woogieboogie-jl.github.io/dev/markdown-syntax-basics/</guid>
       <description>This post demonstrates basic markdown syntaxes. All references come from: Markdown Guide &amp;amp; 마크다운 문법 1. Headings MARKDOWN RESULTS # Heading 1 Heading 1 ## Heading 2 Heading 2 ### Heading 3 Heading 3 #### Heading 4 Heading 4 . 2. Paragraphs MARKDOWN RESULTS Hello, I&#39;m woogieboogie. My former major is arhcitecutre, but I just started coding to build things online! I&#39;m a crypto enthusiast and</description>
     </item>
     
