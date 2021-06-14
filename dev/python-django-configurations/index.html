@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>woogieboogie.dev/dev/python-django-configurations/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://woogieboogie-jl.github.io/hugo-theme-console/css/terminal-0.7.1.css">
+    <link rel="stylesheet" href="https://woogieboogie-jl.github.io/hugo-theme-console/css/animate-3.7.2.min.css">
+    <link rel="stylesheet" href="https://woogieboogie-jl.github.io/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="Python Django Configurations" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogieboogie-jl.github.io/dev/python-django-configurations/" /><meta property="article:published_time" content="2021-06-11T01:41:25+09:00" />
+
+
+
+<meta name="twitter:title" content="Python Django Configurations"/>
+<meta name="twitter:description" content="This post includes a brief summary of how-to setup a proper configuration for migrating wordpress-based webservice to django for the following website REITSKorea. References come mostly from: Nomadcoders and my personal researches throughout the internet.
+  
+1. pipenv &amp; install django pipenv is a package &#43; virtual environment manager."/>
+
+</head>
+<body class="terminal">
+  <div class="terminal-nav">
+    <header class="terminal-logo">
+      <div class="logo terminal-prompt">
+        
+        
+        <a href="https://woogieboogie-jl.github.io" class="no-style ">woogieboogie.dev</a>:~# 
+        <a href='https://woogieboogie-jl.github.iodev'>dev</a>/<a href='https://woogieboogie-jl.github.iodev/python-django-configurations'>python-django-configurations</a>/</div></header>
+    <nav class="terminal-menu">
+      <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+          
+          <li><a href="https://woogieboogie-jl.github.io/about/" typeof="ListItem">about/</a></li>
+          
+          <li><a href="https://woogieboogie-jl.github.io/dev/" typeof="ListItem">dev/</a></li>
+          
+          <li><a href="https://woogieboogie-jl.github.io/crypto/" typeof="ListItem">crypto/</a></li>
+          
+          <li><a href="https://woogieboogie-jl.github.io/photos/" typeof="ListItem">photos/</a></li>
+          
+      </ul>
+    </nav>
+  </div>
+
+    <div class="container animated zoomIn fast" >
+      <div class="container-main">
+        
+<h1>Python Django Configurations</h1>
+<blockquote>
+<p>This post includes a brief summary of how-to setup a proper configuration for migrating wordpress-based webservice to django for the following website <a href="https://reitskorea.co.kr">REITSKorea</a>.
+References come mostly from: <a href="https://nomadcoders.com">Nomadcoders</a> and my personal researches throughout the internet.</p>
+</blockquote>
+<hr>
+<p><br />
+<br /></p>
+<h2 id="1-pipenv--install-django">1. pipenv &amp; install django</h2>
+<p><em>pipenv is a package + virtual environment manager. To simply put: it&rsquo;s pip + virtualenv combined.</em><br>
+<br /></p>
+<h4 id="1-1-install-pipenv--with">1-1. Install pipenv  with:</h4>
+<blockquote>
+<p><code>pip install pipenv</code> or <code>brew install pipenv</code></p>
+</blockquote>
+<h4 id="1-2-enter-the-pipenv-shell--install-django">1-2. Enter the pipenv shell &amp; install Django</h4>
+<blockquote>
+<p><code>pipenv shell</code><br>
+<code>pipenv install django</code></p>
+</blockquote>
+<h4 id="1-3-start-a-django-project-with-configuration-options">1-3. Start a Django project with configuration options</h4>
+<blockquote>
+<p><code>django startproject config</code></p>
+</blockquote>
+<p>Then change the directory structure: gather all the configuration files (settings.py, wsgi.py &hellip; etc) in one single &lsquo;config&rsquo; folder in the parent directory.</p>
+<p><br />
+<br />
+<br /></p>
+<h2 id="2-changing-the-default-dbsqlite3-to-postgresql">2. Changing the default DB(sqlite3) to postgresql</h2>
+<p><em>Django requires a module called psycopg2 as an adapter to connect to postgresql DB.</em><br>
+<br /></p>
+<h4 id="2-1-install-psycopg2-with">2-1. Install psycopg2 with:</h4>
+<blockquote>
+<p><code>pipenv install psycopg2</code></p>
+</blockquote>
+<p>if the above command doesn&rsquo;t work &amp; Prints out an error, try the binary version of the psycopg2:</p>
+<blockquote>
+<p><code>pipenv install psycopg2-binary</code></p>
+</blockquote>
+<p><strong>As of Jun 11. 2021</strong>,</p>
+<p>The current version of psycopg2-binary(2.8.6) happened to have dependency errors in my M1 Mac(Big Sur) local environement</p>
+<p>So, I installed the version in development at local environement without locking it to pipfile:</p>
+<blockquote>
+<p><code>pipenv install -i https://test.pypi.org/simple psycopg2-binary==2.9.0.dev0 --skip-lock</code></p>
+</blockquote>
+<p>Then manually changed the pipfile&rsquo;s psycopg2 version to &ldquo;2.8.6&rdquo; for deployment purposes.</p>
+<p><br />
+<br /></p>
+<h4 id="2-2-postgresql-create-local-db">2-2. postgresql create local DB</h4>
+<p>After successfully installing psycopg2 module, you need to create a local postgresql DB for django.</p>
+<p>if you haven&rsquo;t installed postgresql, install it via command:</p>
+<blockquote>
+<p><code>brew install postgresql</code></p>
+</blockquote>
+<p>After, get inside the postgresql console by command:</p>
+<blockquote>
+<p><code>psql</code></p>
+</blockquote>
+<p>Then create a DB with a command:</p>
+<blockquote>
+<p><code>CREATE DATABASE {db_name} WITH OWNER = {user_name};</code></p>
+</blockquote>
+<p>For example:</p>
+<blockquote>
+<p><code>CREATE DATABASE reitskorea WITH OWNER = woogieboogie;</code></p>
+</blockquote>
+<p><em>For above example, if you don&rsquo;t have a user yet, make sure you create a user and then create a postgresql db with it.</em></p>
+<p><br />
+<br />
+<br /></p>
+<h2 id="3-change-settingspy">3. Change settings.py</h2>
+<p><em>modify settings.py in order to connect to created postgresql DB</em></p>
+<p><br />
+<br /></p>
+<h4 id="3-1-change-database-settings-in-settingspy">3-1. Change DATABASE settings in settings.py</h4>
+<p><br />
+from:</p>
+<pre><code># config/settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+</code></pre><p>to:</p>
+<pre><code># config/settings.py
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dbname',
+        'USER': 'username',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}   
+</code></pre><p><br /></p>
+<h4 id="3-2-db-migrate">3-2. DB Migrate</h4>
+<p>migrate your model to the postgresql DB by:</p>
+<blockquote>
+<p><code>python manage.py migrate</code></p>
+</blockquote>
+<p><br />
+<br />
+<br /></p>
+<h2 id="4-optional-seperating-working-environments">4. Optional: seperating working environments</h2>
+<p><em>Sometimes, you want to seperate working environments to manage your project/product with more stability. In this project, I&rsquo;ve seperated the configuration file into three seperate environments: local, test, and production environment</em></p>
+<p><br /></p>
+<h4 id="4-1-directory-settings">4-1. directory settings</h4>
+<p>Create a settings folder, then create <strong>init</strong>.py, base.py, local.py, test.py, and production.py inside it.</p>
+<p>The resulting config folder directory structure should be as follows:</p>
+<pre><code>project
+│   README.md
+│   ...
+│
+└───config
+│   │   wsgi.py
+│   │   urls.py
+│   │   ...
+│   │
+│   └───settings
+│       │   __init__.py
+│       │   base.py
+│       │   local.py
+│       │   test.py
+│       │   production.py
+│   
+...
+</code></pre><p><br /></p>
+<h4 id="4-2-how-to-seperate-in-each-environment">4-2. How to seperate in each environment</h4>
+<p><br /></p>
+<p><strong>In base.py</strong>, You want to place the common configuration settings for the project such as application settings / admin settings.. etc</p>
+<pre><code># config/settings/base.py
+
+DJANGO_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+PROJECT_APPS = [
+    &quot;core.apps.CoreConfig&quot;,
+    &quot;users.apps.UsersConfig&quot;,
+    &quot;reits.apps.ReitsConfig&quot;,
+    &quot;sectors.apps.SectorsConfig&quot;,
+]
+...
+</code></pre><p><br /></p>
+<p><strong>In local.py</strong><br>
+You want to place local configuration settings where you will be debugging and building the project. Good examples would be DEBUG=TRUE options, ALLOWED_HOSTS options and local DB settings&hellip; etc</p>
+<pre><code># config/settings/local.py
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'reitskorea',
+        'USER': 'woogieboogie',
+        'PASSWORD': 'password',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+ALLOWED_HOSTS = []
+</code></pre><p><br /></p>
+<p><strong>In test.py</strong><br>
+You want to place test-level configuration settings.
+I usually have the same settings as production since test-level service is a pre-flight test just before deploying the service to the production environment.</p>
+<p><br /></p>
+<p><strong>In production.py</strong><br>
+You want to place production-level configuration settings for deployment and production.<br>
+Examples of this would be static file locations, and allowed host lists in production environment.</p>
+<p>You do not want to explicitly have sensitive key-values stored in this file.  (ex. AWS passwords, DB passwords, etc..)</p>
+<p><strong>MAKE SURE TO USE SEPERATE ENVIRONMENT</strong> or store them somewhere else hidden datas.</p>
+<pre><code># config/settings/production.py
+
+AWS_STORAGE_BUCKET_NAME = &quot;nomad-django-production-bucket&quot;
+AWS_LOCATION = 'static'
+AWS_REGION = 'ap-northeast-2'
+AWS_S3_CUSTOM_DOMAIN = f&quot;{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com&quot;
+
+STATIC_URL = f&quot;https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/&quot;
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+MEDIA_URL = &quot;/media/&quot;
+MEDIA_ROOT = os.path.join(BASE_DIR, &quot;uploads&quot;)
+
+
+sentry_sdk.init(
+    dsn=os.environ.get(&quot;SENTRY_URL&quot;),
+    integrations=[DjangoIntegration()],
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+    )
+</code></pre><p><br />
+<br />
+<br /></p>
+
+
+      </div>
+      <div class="container-footer">
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> +
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>
