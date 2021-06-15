@@ -6,7 +6,17 @@
     <description>Recent content on woogieboogie.dev</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Jun 2021 01:41:25 +0900</lastBuildDate><atom:link href="https://woogieboogie-jl.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Jun 2021 11:19:45 +0900</lastBuildDate><atom:link href="https://woogieboogie-jl.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tailwindcss Configuration for Django</title>
+      <link>https://woogieboogie-jl.github.io/dev/tailwindcss-configuration-django/</link>
+      <pubDate>Fri, 11 Jun 2021 11:19:45 +0900</pubDate>
+      
+      <guid>https://woogieboogie-jl.github.io/dev/tailwindcss-configuration-django/</guid>
+      <description>This post will includes a tutorial on how to configure tailwind for Django using gulp. Most of the references come from: Nomadcoders
+  1. Node.js &amp;amp; gulp installation Have the node.js and gulp installed Dependencies used in this tutorial are: 12.</description>
+    </item>
+    
     <item>
       <title>Python Django Configurations</title>
       <link>https://woogieboogie-jl.github.io/dev/python-django-configurations/</link>
