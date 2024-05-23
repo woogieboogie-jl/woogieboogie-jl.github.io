@@ -1,39 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>P_log on woogieboogie.dev</title>
+    <title>P_log on woogieboogie-jl</title>
     <link>https://woogieboogie-jl.github.io/p_log/</link>
-    <description>Recent content in P_log on woogieboogie.dev</description>
+    <description>Recent content in P_log on woogieboogie-jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://woogieboogie-jl.github.io/p_log/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 11 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://woogieboogie-jl.github.io/p_log/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>La Seine, Paris, 09/11</title>
       <link>https://woogieboogie-jl.github.io/p_log/0911-paris-fr/</link>
       <pubDate>Sat, 11 Sep 2021 00:00:00 +0000</pubDate>
-      
       <guid>https://woogieboogie-jl.github.io/p_log/0911-paris-fr/</guid>
       <description>I was able to make new french friends. We walked for 4+ hours. My legs are worn out but it was a nice exercise. A perfect example of nice activity to celebrate someone&amp;rsquo;s birthday. (Im not being sarcastic - I like walking for hours and hours)</description>
     </item>
-    
     <item>
       <title>My Dorm, Residence Lepaute 08/31</title>
-      <link>https://woogieboogie-jl.github.io/p_log/0831-paris-fr-copy-2/</link>
+      <link>https://woogieboogie-jl.github.io/p_log/0831-paris-fr/</link>
       <pubDate>Tue, 31 Aug 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://woogieboogie-jl.github.io/p_log/0831-paris-fr-copy-2/</guid>
+      <guid>https://woogieboogie-jl.github.io/p_log/0831-paris-fr/</guid>
       <description>Arrived in Paris. My dorm looks good - a nice penthouse of 12 story building. It&amp;rsquo;s on the outskirts of Paris, at the 13e arrondisement. I can see the whole train station and it gets super noisy at night. Gotta get used to it.</description>
     </item>
-    
     <item>
       <title>City view, Paris, 09/01</title>
       <link>https://woogieboogie-jl.github.io/p_log/0901-paris-fr/</link>
       <pubDate>Tue, 01 Sep 2020 00:00:00 +0000</pubDate>
-      
       <guid>https://woogieboogie-jl.github.io/p_log/0901-paris-fr/</guid>
-      <description>From day 1, Paris, the golden city, was shining bright. My exchange uni - Sorbonne University is located in the heart of Paris, near the station Jussieu.
-Oh, btw, I forgot to bring my sunglasses and it was super bright, the forcast saids that it will rain next week so it might be less hot to hang out.</description>
+      <description>From day 1, Paris, the golden city, was shining bright. My exchange uni - Sorbonne University is located in the heart of Paris, near the station Jussieu.&#xA;Oh, btw, I forgot to bring my sunglasses and it was super bright, the forcast saids that it will rain next week so it might be less hot to hang out.</description>
     </item>
-    
   </channel>
 </rss>

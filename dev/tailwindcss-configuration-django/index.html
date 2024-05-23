@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>woogieboogie.dev/dev/tailwindcss-configuration-django/</title>
+    <title>woogieboogie-jl/dev/tailwindcss-configuration-django/</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -25,7 +25,7 @@
 
 <meta name="twitter:title" content="Tailwindcss Configuration for Django"/>
 <meta name="twitter:description" content="This post will includes a tutorial on how to configure tailwind for Django using gulp. Most of the references come from: Nomadcoders
-  1. Node.js &amp; gulp installation Have the node.js and gulp installed Dependencies used in this tutorial are: 12."/>
+1. Node.js &amp; gulp installation Have the node.js and gulp installed Dependencies used in this tutorial are: 12."/>
 
 </head>
 <body class="terminal">
@@ -34,8 +34,8 @@
       <div class="logo terminal-prompt">
         
         
-        <a href="https://woogieboogie-jl.github.io" class="no-style ">woogieboogie.dev</a>:~# 
-        <a href='https://woogieboogie-jl.github.iodev'>dev</a>/<a href='https://woogieboogie-jl.github.iodev/tailwindcss-configuration-django'>tailwindcss-configuration-django</a>/</div></header>
+        <a href="https://woogieboogie-jl.github.io/" class="no-style ">woogieboogie-jl</a>:~# 
+        <a href='https://woogieboogie-jl.github.io/dev'>dev</a>/<a href='https://woogieboogie-jl.github.io/dev/tailwindcss-configuration-django'>tailwindcss-configuration-django</a>/</div></header>
     <nav class="terminal-menu">
       <ul vocab="https://schema.org/" typeof="BreadcrumbList">
           
@@ -103,25 +103,25 @@ Add &ldquo;node_modules/&rdquo; in it so the whole tailwind library doesn&rsquo;
 <strong>So, the directory of the &ldquo;styles.scss&rdquo; should be: &ldquo;assets/scss/styles.scss&rdquo;</strong></p>
 <br>
 <p>Then modify the &ldquo;styles.scss&rdquo; file by importing tailwind in it.</p>
-<pre><code>@tailwind base;
+<pre tabindex="0"><code>@tailwind base;
 @tailwind components;
 @tailwind utilities;
 </code></pre><br>
 <h4 id="2-2-gulpfile-configuration">2-2. gulpfile configuration</h4>
 <p>Create a &ldquo;gulpfile.js&rdquo; In the main directory and write below code in it:</p>
-<pre><code>const gulp = require(&quot;gulp&quot;);
+<pre tabindex="0"><code>const gulp = require(&#34;gulp&#34;);
 
 const css = () =&gt; {
-const postCSS = require(&quot;gulp-postcss&quot;);
-const sass = require(&quot;gulp-sass&quot;);
-const minify = require(&quot;gulp-csso&quot;);
-sass.compiler = require(&quot;node-sass&quot;);
+const postCSS = require(&#34;gulp-postcss&#34;);
+const sass = require(&#34;gulp-sass&#34;);
+const minify = require(&#34;gulp-csso&#34;);
+sass.compiler = require(&#34;node-sass&#34;);
 return gulp
-    .src(&quot;assets/scss/styles.scss&quot;)
-    .pipe(sass().on(&quot;error&quot;, sass.logError))
-    .pipe(postCSS([require(&quot;tailwindcss&quot;), require(&quot;autoprefixer&quot;)]))
+    .src(&#34;assets/scss/styles.scss&#34;)
+    .pipe(sass().on(&#34;error&#34;, sass.logError))
+    .pipe(postCSS([require(&#34;tailwindcss&#34;), require(&#34;autoprefixer&#34;)]))
     .pipe(minify())
-    .pipe(gulp.dest(&quot;static/css&quot;));
+    .pipe(gulp.dest(&#34;static/css&#34;));
 };
 
 exports.default = css;

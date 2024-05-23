@@ -1,41 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Devs on woogieboogie.dev</title>
+    <title>Devs on woogieboogie-jl</title>
     <link>https://woogieboogie-jl.github.io/dev/</link>
-    <description>Recent content in Devs on woogieboogie.dev</description>
+    <description>Recent content in Devs on woogieboogie-jl</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Jun 2021 11:19:45 +0900</lastBuildDate><atom:link href="https://woogieboogie-jl.github.io/dev/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 11 Jun 2021 11:19:45 +0900</lastBuildDate>
+    <atom:link href="https://woogieboogie-jl.github.io/dev/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Tailwindcss Configuration for Django</title>
       <link>https://woogieboogie-jl.github.io/dev/tailwindcss-configuration-django/</link>
       <pubDate>Fri, 11 Jun 2021 11:19:45 +0900</pubDate>
-      
       <guid>https://woogieboogie-jl.github.io/dev/tailwindcss-configuration-django/</guid>
-      <description>This post will includes a tutorial on how to configure tailwind for Django using gulp. Most of the references come from: Nomadcoders
-  1. Node.js &amp;amp; gulp installation Have the node.js and gulp installed Dependencies used in this tutorial are: 12.</description>
+      <description>This post will includes a tutorial on how to configure tailwind for Django using gulp. Most of the references come from: Nomadcoders&#xA;1. Node.js &amp;amp; gulp installation Have the node.js and gulp installed Dependencies used in this tutorial are: 12.</description>
     </item>
-    
     <item>
       <title>Python Django Configurations</title>
       <link>https://woogieboogie-jl.github.io/dev/python-django-configurations/</link>
       <pubDate>Fri, 11 Jun 2021 01:41:25 +0900</pubDate>
-      
       <guid>https://woogieboogie-jl.github.io/dev/python-django-configurations/</guid>
-      <description>This post includes a brief summary of how-to setup a proper configuration for migrating wordpress-based webservice to django for the following website REITSKorea. References come mostly from: Nomadcoders and my personal researches throughout the internet.
-  
-1. pipenv &amp;amp; install django pipenv is a package + virtual environment manager.</description>
+      <description>This post includes a brief summary of how-to setup a proper configuration for migrating wordpress-based webservice to django for the following website REITSKorea. References come mostly from: Nomadcoders and my personal researches throughout the internet.&#xA;1. pipenv &amp;amp; install django pipenv is a package + virtual environment manager.</description>
     </item>
-    
     <item>
       <title>Markdown Syntax - Basics</title>
       <link>https://woogieboogie-jl.github.io/dev/markdown-syntax-basics/</link>
       <pubDate>Fri, 04 Jun 2021 22:26:01 +0900</pubDate>
-      
       <guid>https://woogieboogie-jl.github.io/dev/markdown-syntax-basics/</guid>
       <description>This post demonstrates basic markdown syntaxes. All references come from: Markdown Guide &amp;amp; 마크다운 문법 1. Headings MARKDOWN RESULTS # Heading 1 Heading 1 ## Heading 2 Heading 2 ### Heading 3 Heading 3 #### Heading</description>
     </item>
-    
   </channel>
 </rss>

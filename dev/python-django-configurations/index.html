@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>woogieboogie.dev/dev/python-django-configurations/</title>
+    <title>woogieboogie-jl/dev/python-django-configurations/</title>
     
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="all,follow">
@@ -25,7 +25,6 @@
 
 <meta name="twitter:title" content="Python Django Configurations"/>
 <meta name="twitter:description" content="This post includes a brief summary of how-to setup a proper configuration for migrating wordpress-based webservice to django for the following website REITSKorea. References come mostly from: Nomadcoders and my personal researches throughout the internet.
-  
 1. pipenv &amp; install django pipenv is a package &#43; virtual environment manager."/>
 
 </head>
@@ -35,8 +34,8 @@
       <div class="logo terminal-prompt">
         
         
-        <a href="https://woogieboogie-jl.github.io" class="no-style ">woogieboogie.dev</a>:~# 
-        <a href='https://woogieboogie-jl.github.iodev'>dev</a>/<a href='https://woogieboogie-jl.github.iodev/python-django-configurations'>python-django-configurations</a>/</div></header>
+        <a href="https://woogieboogie-jl.github.io/" class="no-style ">woogieboogie-jl</a>:~# 
+        <a href='https://woogieboogie-jl.github.io/dev'>dev</a>/<a href='https://woogieboogie-jl.github.io/dev/python-django-configurations'>python-django-configurations</a>/</div></header>
     <nav class="terminal-menu">
       <ul vocab="https://schema.org/" typeof="BreadcrumbList">
           
@@ -61,8 +60,8 @@
 References come mostly from: <a href="https://nomadcoders.com">Nomadcoders</a> and my personal researches throughout the internet.</p>
 </blockquote>
 <hr>
-<p><br />
-<br /></p>
+<br />
+<br />
 <h2 id="1-pipenv--install-django">1. pipenv &amp; install django</h2>
 <p><em>pipenv is a package + virtual environment manager. To simply put: it&rsquo;s pip + virtualenv combined.</em><br>
 <br /></p>
@@ -80,9 +79,9 @@ References come mostly from: <a href="https://nomadcoders.com">Nomadcoders</a> a
 <p><code>django startproject config</code></p>
 </blockquote>
 <p>Then change the directory structure: gather all the configuration files (settings.py, wsgi.py &hellip; etc) in one single &lsquo;config&rsquo; folder in the parent directory.</p>
-<p><br />
 <br />
-<br /></p>
+<br />
+<br />
 <h2 id="2-changing-the-default-dbsqlite3-to-postgresql">2. Changing the default DB(sqlite3) to postgresql</h2>
 <p><em>Django requires a module called psycopg2 as an adapter to connect to postgresql DB.</em><br>
 <br /></p>
@@ -101,9 +100,9 @@ References come mostly from: <a href="https://nomadcoders.com">Nomadcoders</a> a
 <p><code>pipenv install -i https://test.pypi.org/simple psycopg2-binary==2.9.0.dev0 --skip-lock</code></p>
 </blockquote>
 <p>Then manually changed the pipfile&rsquo;s psycopg2 version to &ldquo;2.8.6&rdquo; for deployment purposes.</p>
-<p><br />
-<br /></p>
-<h4 id="2-2-postgresql-create-local-db">2-2. postgresql create local DB</h4>
+<br />
+<br />
+#### 2-2. postgresql create local DB  
 <p>After successfully installing psycopg2 module, you need to create a local postgresql DB for django.</p>
 <p>if you haven&rsquo;t installed postgresql, install it via command:</p>
 <blockquote>
@@ -122,25 +121,28 @@ References come mostly from: <a href="https://nomadcoders.com">Nomadcoders</a> a
 <p><code>CREATE DATABASE reitskorea WITH OWNER = woogieboogie;</code></p>
 </blockquote>
 <p><em>For above example, if you don&rsquo;t have a user yet, make sure you create a user and then create a postgresql db with it.</em></p>
-<p><br />
 <br />
-<br /></p>
+<br />
+<br />
 <h2 id="3-change-settingspy">3. Change settings.py</h2>
 <p><em>modify settings.py in order to connect to created postgresql DB</em></p>
-<p><br />
-<br /></p>
+<br />
+<br />
 <h4 id="3-1-change-database-settings-in-settingspy">3-1. Change DATABASE settings in settings.py</h4>
-<p><br />
-from:</p>
-<pre><code># config/settings.py
+<br />
+from:
+```
+# config/settings.py
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-</code></pre><p>to:</p>
-<pre><code># config/settings.py
+```
+to:
+```
+# config/settings.py
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -151,22 +153,23 @@ DATABASES = {
         'PORT': '',
     }
 }   
-</code></pre><p><br /></p>
+```
+<br />
 <h4 id="3-2-db-migrate">3-2. DB Migrate</h4>
 <p>migrate your model to the postgresql DB by:</p>
 <blockquote>
 <p><code>python manage.py migrate</code></p>
 </blockquote>
-<p><br />
 <br />
-<br /></p>
+<br />
+<br />
 <h2 id="4-optional-seperating-working-environments">4. Optional: seperating working environments</h2>
 <p><em>Sometimes, you want to seperate working environments to manage your project/product with more stability. In this project, I&rsquo;ve seperated the configuration file into three seperate environments: local, test, and production environment</em></p>
-<p><br /></p>
+<br />
 <h4 id="4-1-directory-settings">4-1. directory settings</h4>
 <p>Create a settings folder, then create <strong>init</strong>.py, base.py, local.py, test.py, and production.py inside it.</p>
 <p>The resulting config folder directory structure should be as follows:</p>
-<pre><code>project
+<pre tabindex="0"><code>project
 │   README.md
 │   ...
 │
@@ -183,73 +186,73 @@ DATABASES = {
 │       │   production.py
 │   
 ...
-</code></pre><p><br /></p>
+</code></pre><br />
 <h4 id="4-2-how-to-seperate-in-each-environment">4-2. How to seperate in each environment</h4>
-<p><br /></p>
+<br />
 <p><strong>In base.py</strong>, You want to place the common configuration settings for the project such as application settings / admin settings.. etc</p>
-<pre><code># config/settings/base.py
+<pre tabindex="0"><code># config/settings/base.py
 
 DJANGO_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    &#39;django.contrib.admin&#39;,
+    &#39;django.contrib.auth&#39;,
+    &#39;django.contrib.contenttypes&#39;,
+    &#39;django.contrib.sessions&#39;,
+    &#39;django.contrib.messages&#39;,
+    &#39;django.contrib.staticfiles&#39;,
 ]
 
 PROJECT_APPS = [
-    &quot;core.apps.CoreConfig&quot;,
-    &quot;users.apps.UsersConfig&quot;,
-    &quot;reits.apps.ReitsConfig&quot;,
-    &quot;sectors.apps.SectorsConfig&quot;,
+    &#34;core.apps.CoreConfig&#34;,
+    &#34;users.apps.UsersConfig&#34;,
+    &#34;reits.apps.ReitsConfig&#34;,
+    &#34;sectors.apps.SectorsConfig&#34;,
 ]
 ...
-</code></pre><p><br /></p>
+</code></pre><br />
 <p><strong>In local.py</strong><br>
 You want to place local configuration settings where you will be debugging and building the project. Good examples would be DEBUG=TRUE options, ALLOWED_HOSTS options and local DB settings&hellip; etc</p>
-<pre><code># config/settings/local.py
+<pre tabindex="0"><code># config/settings/local.py
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'reitskorea',
-        'USER': 'woogieboogie',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '',
+    &#39;default&#39;: {
+        &#39;ENGINE&#39;: &#39;django.db.backends.postgresql_psycopg2&#39;,
+        &#39;NAME&#39;: &#39;reitskorea&#39;,
+        &#39;USER&#39;: &#39;woogieboogie&#39;,
+        &#39;PASSWORD&#39;: &#39;password&#39;,
+        &#39;HOST&#39;: &#39;localhost&#39;,
+        &#39;PORT&#39;: &#39;&#39;,
     }
 }
 
 ALLOWED_HOSTS = []
-</code></pre><p><br /></p>
+</code></pre><br />
 <p><strong>In test.py</strong><br>
 You want to place test-level configuration settings.
 I usually have the same settings as production since test-level service is a pre-flight test just before deploying the service to the production environment.</p>
-<p><br /></p>
+<br />
 <p><strong>In production.py</strong><br>
 You want to place production-level configuration settings for deployment and production.<br>
 Examples of this would be static file locations, and allowed host lists in production environment.</p>
 <p>You do not want to explicitly have sensitive key-values stored in this file.  (ex. AWS passwords, DB passwords, etc..)</p>
 <p><strong>MAKE SURE TO USE SEPERATE ENVIRONMENT</strong> or store them somewhere else hidden datas.</p>
-<pre><code># config/settings/production.py
+<pre tabindex="0"><code># config/settings/production.py
 
-AWS_STORAGE_BUCKET_NAME = &quot;nomad-django-production-bucket&quot;
-AWS_LOCATION = 'static'
-AWS_REGION = 'ap-northeast-2'
-AWS_S3_CUSTOM_DOMAIN = f&quot;{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com&quot;
+AWS_STORAGE_BUCKET_NAME = &#34;nomad-django-production-bucket&#34;
+AWS_LOCATION = &#39;static&#39;
+AWS_REGION = &#39;ap-northeast-2&#39;
+AWS_S3_CUSTOM_DOMAIN = f&#34;{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_REGION}.amazonaws.com&#34;
 
-STATIC_URL = f&quot;https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/&quot;
+STATIC_URL = f&#34;https://{AWS_S3_CUSTOM_DOMAIN}/{AWS_LOCATION}/&#34;
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, &#39;static&#39;),
 ]
 
-MEDIA_URL = &quot;/media/&quot;
-MEDIA_ROOT = os.path.join(BASE_DIR, &quot;uploads&quot;)
+MEDIA_URL = &#34;/media/&#34;
+MEDIA_ROOT = os.path.join(BASE_DIR, &#34;uploads&#34;)
 
 
 sentry_sdk.init(
-    dsn=os.environ.get(&quot;SENTRY_URL&quot;),
+    dsn=os.environ.get(&#34;SENTRY_URL&#34;),
     integrations=[DjangoIntegration()],
 
     # Set traces_sample_rate to 1.0 to capture 100%
@@ -261,10 +264,9 @@ sentry_sdk.init(
     # django.contrib.auth) you may enable sending PII data.
     send_default_pii=True
     )
-</code></pre><p><br />
+</code></pre><br />
 <br />
-<br /></p>
-
+<br />
 
       </div>
       <div class="container-footer">

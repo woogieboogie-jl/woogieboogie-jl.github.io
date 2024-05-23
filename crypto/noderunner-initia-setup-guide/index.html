@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>woogieboogie-jl/crypto/noderunner-initia-setup-guide/</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <meta name="googlebot" content="index,follow,snippet,archive">
+    <link rel="stylesheet" href="https://woogieboogie-jl.github.io/hugo-theme-console/css/terminal-0.7.1.css">
+    <link rel="stylesheet" href="https://woogieboogie-jl.github.io/hugo-theme-console/css/animate-3.7.2.min.css">
+    <link rel="stylesheet" href="https://woogieboogie-jl.github.io/hugo-theme-console/css/console.css">
+    
+      <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+       <meta property="og:title" content="NodeRunners: Initia Node Initiation" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://woogieboogie-jl.github.io/crypto/noderunner-initia-setup-guide/" /><meta property="article:published_time" content="2024-05-04T02:51:24+09:00" />
+
+
+
+<meta name="twitter:title" content="NodeRunners: Initia Node Initiation"/>
+<meta name="twitter:description" content="Navigation Menu Hardware requirements TrustedPoint Services Installation guide 1. Install required packages 2. Install Go 3. Install initia binary 4. Set up variables 5. Initialize the node 6. Download genesis.json 7. Add seeds and peers to the config.toml 8. Change ports (Optional) 9."/>
+
+</head>
+<body class="terminal">
+  <div class="terminal-nav">
+    <header class="terminal-logo">
+      <div class="logo terminal-prompt">
+        
+        
+        <a href="https://woogieboogie-jl.github.io/" class="no-style ">woogieboogie-jl</a>:~# 
+        <a href='https://woogieboogie-jl.github.io/crypto'>crypto</a>/<a href='https://woogieboogie-jl.github.io/crypto/noderunner-initia-setup-guide'>noderunner-initia-setup-guide</a>/</div></header>
+    <nav class="terminal-menu">
+      <ul vocab="https://schema.org/" typeof="BreadcrumbList">
+          
+          <li><a href="https://woogieboogie-jl.github.io/about/" typeof="ListItem">about/</a></li>
+          
+          <li><a href="https://woogieboogie-jl.github.io/dev/" typeof="ListItem">dev/</a></li>
+          
+          <li><a href="https://woogieboogie-jl.github.io/crypto/" typeof="ListItem">crypto/</a></li>
+          
+          <li><a href="https://woogieboogie-jl.github.io/p_log/" typeof="ListItem">p_log/</a></li>
+          
+      </ul>
+    </nav>
+  </div>
+
+    <div class="container animated zoomIn fast" >
+      <div class="container-main">
+        
+<h1>NodeRunners: Initia Node Initiation</h1>
+<h3 id="navigation-menu">Navigation Menu</h3>
+<ul>
+<li><a href="#hardware-requirements">Hardware requirements</a></li>
+<li><a href="#trustedpoint-services">TrustedPoint Services</a></li>
+<li><a href="#installation-guide">Installation guide</a>
+<ul>
+<li><a href="#1-install-required-packages">1. Install required packages</a></li>
+<li><a href="#2-install-go">2. Install Go</a></li>
+<li><a href="#3-install-initia-binary">3. Install <code>initia</code> binary</a></li>
+<li><a href="#4-set-up-variables">4. Set up variables</a></li>
+<li><a href="#5-initialize-the-node">5. Initialize the node</a></li>
+<li><a href="#6-download-genesisjson">6. Download genesis.json</a></li>
+<li><a href="#7-add-seeds-and-peers-to-the-configtoml">7. Add seeds and peers to the config.toml</a></li>
+<li><a href="#8-change-ports-optional">8. Change ports (Optional)</a></li>
+<li><a href="#9-configure-prunning-to-save-storage-optional">9. Configure prunning to save storage (Optional)</a></li>
+<li><a href="#10-set-min-gas-price">10. Set min gas price</a></li>
+<li><a href="#11-enable-indexer-optional">11. Enable indexer (Optional)</a></li>
+<li><a href="#12-create-a-service-file">12. Create a service file</a></li>
+<li><a href="#13-start-the-node">13. Start the node</a></li>
+<li><a href="#14-create-a-wallet-for-your-validator">14. Create a wallet for your validator</a></li>
+<li><a href="#15-request-tokens-from-the-faucet-on-discord">15. Request tokens from the faucet on Discord</a></li>
+<li><a href="#16-check-wallet-balance">16. Check wallet balance</a></li>
+<li><a href="#17-create-a-validator">17. Create a validator</a></li>
+</ul>
+</li>
+<li><a href="#state-sync">State sync</a>
+<ul>
+<li><a href="#1-stop-the-node">1. Stop the node</a></li>
+<li><a href="#2-backup-priv_validator_statejson">2. Backup priv_validator_state.json</a></li>
+<li><a href="#3-reset-db">3. Reset DB</a></li>
+<li><a href="#4-setup-required-variables-one-command">4. Setup required variables (One command)</a></li>
+<li><a href="#4-move-priv_validator_statejson-back">4. Move priv_validator_state.json back</a></li>
+<li><a href="#5-start-the-node">5. Start the node</a></li>
+<li><a href="#6-check-the-synchronization-status">6. Check the synchronization status</a></li>
+<li><a href="#7-disable-state-sync">7. Disable state sync</a></li>
+</ul>
+</li>
+<li><a href="#download-fresh-addrbookjson">Download fresh addrbook.json</a>
+<ul>
+<li><a href="#1-stop-the-node-and-use-wget-to-download-the-file">1. Stop the node and use <code>wget</code> to download the file</a></li>
+<li><a href="#2-restart-the-node">2. Restart the node</a></li>
+<li><a href="#3-check-the-synchronization-status">3. Check the synchronization status</a></li>
+</ul>
+</li>
+<li><a href="#add-fresh-persistent-peers">Add fresh persistent peers</a>
+<ul>
+<li><a href="#1-extract-persistent_peers-from-our-endpoint">1. Extract persistent_peers from our endpoint</a></li>
+<li><a href="#2-restart-the-node-1">2. Restart the node</a></li>
+<li><a href="#3-check-the-synchronization-status-1">3. Check the synchronization status</a></li>
+</ul>
+</li>
+<li><a href="#download-snapshot">Download Snapshot</a>
+<ul>
+<li><a href="#1-download-latest-snapshot-from-our-endpoint">1. Download latest snapshot from our endpoint</a></li>
+<li><a href="#2-stop-the-node">2. Stop the node</a></li>
+<li><a href="#3-backup-priv_validator_statejson">3. Backup priv_validator_state.json</a></li>
+<li><a href="#4-reset-db">4. Reset DB</a></li>
+<li><a href="#5-extract-files-fromt-the-arvhive">5. Extract files from the archive</a></li>
+<li><a href="#6-move-priv_validator_statejson-back">6. Move priv_validator_state.json back</a></li>
+<li><a href="#7-restart-the-node">7. Restart the node</a></li>
+<li><a href="#8-check-the-synchronization-status">8. Check the synchronization status</a></li>
+</ul>
+</li>
+<li><a href="#useful-commands">Useful commands</a>
+<ul>
+<li><a href="#check-node-status">Check node status</a></li>
+<li><a href="#query-your-validator">Query your validator</a></li>
+<li><a href="#query-missed-blocks-counter--jail-details-of-your-validator">Query missed blocks counter &amp; jail details of your validator</a></li>
+<li><a href="#unjail-your-validator">Unjail your validator</a></li>
+<li><a href="#delegate-tokens-to-your-validator">Delegate tokens to your validator</a></li>
+<li><a href="#get-your-p2p-peer-address">Get your p2p peer address</a></li>
+<li><a href="#edit-your-validator">Edit your validator</a></li>
+<li><a href="#send-tokens-between-wallets">Send tokens between wallets</a></li>
+<li><a href="#query-your-wallet-balance">Query your wallet balance</a></li>
+<li><a href="#monitor-server-load">Monitor server load</a></li>
+<li><a href="#query-active-validators">Query active validators</a></li>
+<li><a href="#query-inactive-validators">Query inactive validators</a></li>
+<li><a href="#check-logs-of-the-node">Check logs of the node</a></li>
+<li><a href="#restart-the-node">Restart the node</a></li>
+<li><a href="#stop-the-node">Stop the node</a></li>
+<li><a href="#delete-the-node-from-the-server">Delete the node from the server</a></li>
+<li><a href="#example-grpc-usage">Example gRPC usage</a></li>
+<li><a href="#example-rest-api-query">Example REST API query</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="hardware-requirements">Hardware requirements</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#f92672">-</span> Memory: <span style="color:#ae81ff">16</span> GB RAM
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> CPU: <span style="color:#ae81ff">4</span> cores
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> Disk: <span style="color:#ae81ff">1</span> TB SSD
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> Bandwidth: <span style="color:#ae81ff">1</span> Gbps
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span> Linux amd64 arm64 (Ubuntu LTS release)
+</span></span></code></pre></div><h2 id="trustedpoint-services">TrustedPoint Services</h2>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>indexing</td>
+<td>kv</td>
+</tr>
+<tr>
+<td>pruning</td>
+<td>custom (100/17)</td>
+</tr>
+<tr>
+<td>min-retain-blocks</td>
+<td>0</td>
+</tr>
+<tr>
+<td>snapshot-interval</td>
+<td>2000</td>
+</tr>
+<tr>
+<td>snapshot-keep-recent</td>
+<td>2</td>
+</tr>
+<tr>
+<td>minimum-gas-prices</td>
+<td>0.15uinit</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<ul>
+<li>RPC: <a href="https://rpc-initia-testnet.trusted-point.com:443">https://rpc-initia-testnet.trusted-point.com:443</a></li>
+<li>REST API: <a href="https://rpc-initia-testnet.trusted-point.com:443">https://rpc-initia-testnet.trusted-point.com:443</a></li>
+<li>WSS: wss://rpc-initia-testnet.trusted-point.com:443/websocket</li>
+<li>P2P Persistent Peer: <a href="mailto:a63a6f6eae66b5dce57f5c568cdb0a79923a4e18@peer-initia-testnet.trusted-point.com">a63a6f6eae66b5dce57f5c568cdb0a79923a4e18@peer-initia-testnet.trusted-point.com</a>:26628</li>
+</ul>
+<hr>
+<ul>
+<li>State sync: <a href="#state-sync">Guide</a></li>
+<li>Fresh Snapshot: <a href="https://rpc-initia-testnet.trusted-point.com/latest_snapshot.tar.lz4">URL</a> / <a href="#download-snapshot">Guide</a> <strong>(Being updated every 10 hours)</strong></li>
+<li>Fresh addrbook: <a href="https://rpc-initia-testnet.trusted-point.com/addrbook.json">URL</a> / <a href="#download-fresh-addrbookjson">Guide</a> <strong>(Being updated every 5 minutes)</strong></li>
+<li>Live Peers scanner: <a href="https://rpc-initia-testnet.trusted-point.com/peers.txt">URL</a> / <a href="#add-fresh-persistent-peers">Guide</a> <strong>(Being updated every 5 minutes)</strong></li>
+</ul>
+<h2 id="installation-guide">Installation guide</h2>
+<h3 id="1-install-required-packages">1. Install required packages</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sudo apt install curl git jq build-essential gcc unzip wget lz4 -y
+</span></span></code></pre></div><h3 id="2-install-go">2. Install Go</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd $HOME <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>ver<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;1.22.0&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>wget <span style="color:#e6db74">&#34;https://golang.org/dl/go</span>$ver<span style="color:#e6db74">.linux-amd64.tar.gz&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sudo rm -rf /usr/local/go <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sudo tar -C /usr/local -xzf <span style="color:#e6db74">&#34;go</span>$ver<span style="color:#e6db74">.linux-amd64.tar.gz&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>rm <span style="color:#e6db74">&#34;go</span>$ver<span style="color:#e6db74">.linux-amd64.tar.gz&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>echo <span style="color:#e6db74">&#34;export PATH=</span>$PATH<span style="color:#e6db74">:/usr/local/go/bin:</span>$HOME<span style="color:#e6db74">/go/bin&#34;</span> &gt;&gt; $HOME/.bash_profile <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>source $HOME/.bash_profile <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>go version
+</span></span></code></pre></div><h3 id="3-install-initia-binary">3. Install <code>initia</code> binary</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/initia-labs/initia.git
+</span></span><span style="display:flex;"><span>cd initia
+</span></span><span style="display:flex;"><span>git checkout v0.2.15
+</span></span><span style="display:flex;"><span>make install
+</span></span><span style="display:flex;"><span>initiad version
+</span></span></code></pre></div><h3 id="4-set-up-variables">4. Set up variables</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Customize if you need</span>
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export MONIKER=&#34;My_Node&#34;&#39;</span> &gt;&gt; ~/.bash_profile
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export CHAIN_ID=&#34;initiation-1&#34;&#39;</span> &gt;&gt; ~/.bash_profile
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export WALLET_NAME=&#34;wallet&#34;&#39;</span> &gt;&gt; ~/.bash_profile
+</span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;export RPC_PORT=&#34;26657&#34;&#39;</span> &gt;&gt; ~/.bash_profile
+</span></span><span style="display:flex;"><span>source $HOME/.bash_profile
+</span></span></code></pre></div><h3 id="5-initialize-the-node">5. Initialize the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd $HOME
+</span></span><span style="display:flex;"><span>initiad init $MONIKER --chain-id $CHAIN_ID
+</span></span><span style="display:flex;"><span>initiad config set client chain-id $CHAIN_ID
+</span></span><span style="display:flex;"><span>initiad config set client node tcp://localhost:$RPC_PORT
+</span></span><span style="display:flex;"><span>initiad config set client keyring-backend os <span style="color:#75715e"># You can set it to &#34;test&#34; so you will not be asked for a password</span>
+</span></span></code></pre></div><h3 id="6-download-genesisjson">6. Download genesis.json</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://initia.s3.ap-southeast-1.amazonaws.com/initiation-1/genesis.json -O $HOME/.initia/config/genesis.json
+</span></span></code></pre></div><h3 id="7-add-seeds-and-peers-to-the-configtoml">7. Add seeds and peers to the config.toml</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>PEERS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;e3ac92ce5b790c76ce07c5fa3b257d83a517f2f6@178.18.251.146:30656,2692225700832eb9b46c7b3fc6e4dea2ec044a78@34.126.156.141:26656,2a574706e4a1eba0e5e46733c232849778faf93b@84.247.137.184:53456,40d3f977d97d3c02bd5835070cc139f289e774da@168.119.10.134:26313,1f6633bc18eb06b6c0cab97d72c585a6d7a207bc@65.109.59.22:25756,4a988797d8d8473888640b76d7d238b86ce84a2c@23.158.24.168:26656,e3679e68616b2cd66908c460d0371ac3ed7795aa@176.34.17.102:26656,d2a8a00cd5c4431deb899bc39a057b8d8695be9e@138.201.37.195:53456,329227cf8632240914511faa9b43050a34aa863e@43.131.13.84:26656,517c8e70f2a20b8a3179a30fe6eb3ad80c407c07@37.60.231.212:26656,07632ab562028c3394ee8e78823069bfc8de7b4c@37.27.52.25:19656,028999a1696b45863ff84df12ebf2aebc5d40c2d@37.27.48.77:26656,3c44f7dbb473fee6d6e5471f22fa8d8095bd3969@185.219.142.137:53456,8db320e665dbe123af20c4a5c667a17dc146f4d0@51.75.144.149:26656,c424044f3249e73c050a7b45eb6561b52d0db456@158.220.124.183:53456,767fdcfdb0998209834b929c59a2b57d474cc496@207.148.114.112:26656,edcc2c7098c42ee348e50ac2242ff897f51405e9@65.109.34.205:36656,140c332230ac19f118e5882deaf00906a1dba467@185.219.142.119:53456,4eb031b59bd0210481390eefc656c916d47e7872@37.60.248.151:53456,ff9dbc6bb53227ef94dc75ab1ddcaeb2404e1b0b@178.170.47.171:26656,ffb9874da3e0ead65ad62ac2b569122f085c0774@149.28.134.228:26656&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>SEEDS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2eaa272622d1ba6796100ab39f58c75d458b9dbc@34.142.181.82:26656,c28827cb96c14c905b127b92065a3fb4cd77d7f6@testnet-seeds.whispernode.com:25756&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sed -i <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/^seeds *=.*/seeds = \&#34;</span>$SEEDS<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/^persistent_peers *=.*/persistent_peers = \&#34;</span>$PEERS<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    <span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.initia/config/config.toml&#34;</span>
+</span></span></code></pre></div><h3 id="8-change-ports-optional">8. Change ports (Optional)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># Customize if you need</span>
+</span></span><span style="display:flex;"><span>EXTERNAL_IP<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>wget -qO- eth0.me<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>PROXY_APP_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">26658</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>P2P_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">26656</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>PPROF_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">6060</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>API_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">1317</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>GRPC_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">9090</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>GRPC_WEB_PORT<span style="color:#f92672">=</span><span style="color:#ae81ff">9091</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/\(proxy_app = \&#34;tcp:\/\/\)\([^:]*\):\([0-9]*\).*/\1\2:</span>$PROXY_APP_PORT<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/\(laddr = \&#34;tcp:\/\/\)\([^:]*\):\([0-9]*\).*/\1\2:</span>$RPC_PORT<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/\(pprof_laddr = \&#34;\)\([^:]*\):\([0-9]*\).*/\1localhost:</span>$PPROF_PORT<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;/\[p2p\]/,/^\[/{s/\(laddr = \&#34;tcp:\/\/\)\([^:]*\):\([0-9]*\).*/\1\2:</span>$P2P_PORT<span style="color:#e6db74">\&#34;/}&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;/\[p2p\]/,/^\[/{s/\(external_address = \&#34;\)\([^:]*\):\([0-9]*\).*/\1</span><span style="color:#e6db74">${</span>EXTERNAL_IP<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span>$P2P_PORT<span style="color:#e6db74">\&#34;/; t; s/\(external_address = \&#34;\).*/\1</span><span style="color:#e6db74">${</span>EXTERNAL_IP<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span>$P2P_PORT<span style="color:#e6db74">\&#34;/}&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    $HOME/.initia/config/config.toml
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;/\[api\]/,/^\[/{s/\(address = \&#34;tcp:\/\/\)\([^:]*\):\([0-9]*\)\(\&#34;.*\)/\1\2:</span>$API_PORT<span style="color:#e6db74">\4/}&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;/\[grpc\]/,/^\[/{s/\(address = \&#34;\)\([^:]*\):\([0-9]*\)\(\&#34;.*\)/\1\2:</span>$GRPC_PORT<span style="color:#e6db74">\4/}&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;/\[grpc-web\]/,/^\[/{s/\(address = \&#34;\)\([^:]*\):\([0-9]*\)\(\&#34;.*\)/\1\2:</span>$GRPC_WEB_PORT<span style="color:#e6db74">\4/}&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    $HOME/.initia/config/app.toml
+</span></span></code></pre></div><h3 id="9-configure-prunning-to-save-storage-optional">9. Configure prunning to save storage (Optional)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/^pruning *=.*/pruning = \&#34;custom\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/^pruning-keep-recent *=.*/pruning-keep-recent = \&#34;100\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    -e <span style="color:#e6db74">&#34;s/^pruning-interval *=.*/pruning-interval = \&#34;10\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    <span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.initia/config/app.toml&#34;</span>
+</span></span></code></pre></div><h3 id="10-set-min-gas-price">10. Set min gas price</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i -e <span style="color:#e6db74">&#34;s/^minimum-gas-prices *=.*/minimum-gas-prices = \&#34;0.15uinit,0.01uusdc\&#34;/&#34;</span> $HOME/.initia/config/app.toml
+</span></span></code></pre></div><h3 id="11-disable-indexer">11. Disable indexer</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#34;s/^indexer *=.*/indexer = \&#34;null\&#34;/&#34;</span> $HOME/.initia/config/config.toml
+</span></span></code></pre></div><h3 id="12-create-a-service-file">12. Create a service file</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo tee /etc/systemd/system/initiad.service &gt; /dev/null <span style="color:#e6db74">&lt;&lt;EOF
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Unit]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Description=Initia Node
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">After=network.target
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Service]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">User=$USER
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Type=simple
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">ExecStart=$(which initiad) start --home $HOME/.initia
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">Restart=on-failure
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">LimitNOFILE=65535
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">[Install]
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">WantedBy=multi-user.target
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">EOF</span>
+</span></span></code></pre></div><h3 id="13-start-the-node">13. Start the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl daemon-reload <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sudo systemctl enable initiad <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sudo systemctl restart initiad <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>sudo journalctl -u initiad -f -o cat
+</span></span></code></pre></div><p>P.S. Consider <a href="#download-snapshot">downloading snapshot</a> or using <a href="#state-sync">state-sync</a> for the quick sync.</p>
+<h3 id="14-create-a-wallet-for-your-validator">14. Create a wallet for your validator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad keys add $WALLET_NAME
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># DO NOT FORGET TO SAVE THE SEED PHRASE</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># You can add --recover flag to restore existing key instead of creating</span>
+</span></span></code></pre></div><h3 id="15-request-tokens-from-the-faucet-on-discord">15. Request tokens from the faucet on Discord</h3>
+<p>-&gt; <a href="https://faucet.testnet.initia.xyz/"><font size="4"><b><u>FAUCET</u></b></font></a> &lt;-</p>
+<h3 id="16-check-wallet-balance">16. Check wallet balance</h3>
+<p>Make sure your node is fully synced unless it won&rsquo;t work.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad status | jq -r .sync_info
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad q bank balances <span style="color:#66d9ef">$(</span>initiad keys show $WALLET_NAME -a<span style="color:#66d9ef">)</span> 
+</span></span></code></pre></div><h3 id="17-create-a-validator">17. Create a validator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad tx mstaking create-validator <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --amount<span style="color:#f92672">=</span>1000000uinit <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --pubkey<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>initiad tendermint show-validator<span style="color:#66d9ef">)</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --moniker<span style="color:#f92672">=</span>$MONIKER <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --chain-id<span style="color:#f92672">=</span>$CHAIN_ID <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --commission-rate<span style="color:#f92672">=</span>0.05 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --commission-max-rate<span style="color:#f92672">=</span>0.10 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --commission-max-change-rate<span style="color:#f92672">=</span>0.01 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --from<span style="color:#f92672">=</span>$WALLET_NAME <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --identity<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --website<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --details<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Initia to the moon!&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  --gas<span style="color:#f92672">=</span><span style="color:#ae81ff">2000000</span> --fees<span style="color:#f92672">=</span>300000uinit <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>  -y
+</span></span></code></pre></div><p>Do not forget to save <code>priv_validator_key.json</code> file located in $HOME/.initia/config/</p>
+<h2 id="state-sync">State sync</h2>
+<h3 id="1-stop-the-node">1. Stop the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl stop initiad
+</span></span></code></pre></div><h3 id="2-backup-priv_validator_statejson">2. Backup priv_validator_state.json</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp $HOME/.initia/data/priv_validator_state.json $HOME/.initia/priv_validator_state.json.backup
+</span></span></code></pre></div><h3 id="3-reset-db">3. Reset DB</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad tendermint unsafe-reset-all --home $HOME/.initia --keep-addr-book
+</span></span></code></pre></div><h3 id="4-setup-required-variables-one-command">4. Setup required variables (One command)</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>PEERS<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;a63a6f6eae66b5dce57f5c568cdb0a79923a4e18@peer-initia-testnet.trusted-point.com:26628&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>RPC<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://rpc-initia-testnet.trusted-point.com:443&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>LATEST_HEIGHT<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>curl -s --max-time <span style="color:#ae81ff">3</span> --retry <span style="color:#ae81ff">2</span> --retry-connrefused $RPC/block | jq -r .result.block.header.height<span style="color:#66d9ef">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>TRUST_HEIGHT<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span>LATEST_HEIGHT <span style="color:#f92672">-</span> <span style="color:#ae81ff">1500</span><span style="color:#66d9ef">))</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>TRUST_HASH<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>curl -s --max-time <span style="color:#ae81ff">3</span> --retry <span style="color:#ae81ff">2</span> --retry-connrefused <span style="color:#e6db74">&#34;</span>$RPC<span style="color:#e6db74">/block?height=</span>$TRUST_HEIGHT<span style="color:#e6db74">&#34;</span> | jq -r .result.block_id.hash<span style="color:#66d9ef">)</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$PEERS<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$RPC<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$LATEST_HEIGHT<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$TRUST_HEIGHT<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">[</span> -n <span style="color:#e6db74">&#34;</span>$TRUST_HASH<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    sed -i.bak <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        -e <span style="color:#e6db74">&#34;/\[statesync\]/,/^\[/{s/\(enable = \).*</span>$<span style="color:#e6db74">/\1true/}&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        -e <span style="color:#e6db74">&#34;/^rpc_servers =/ s|=.*|= \&#34;</span>$RPC<span style="color:#e6db74">,</span>$RPC<span style="color:#e6db74">\&#34;|;&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        -e <span style="color:#e6db74">&#34;/^trust_height =/ s/=.*/= </span>$TRUST_HEIGHT<span style="color:#e6db74">/;&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        -e <span style="color:#e6db74">&#34;/^trust_hash =/ s/=.*/= \&#34;</span>$TRUST_HASH<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        -e <span style="color:#e6db74">&#34;s/^persistent_peers *=.*/persistent_peers = \&#34;</span>$PEERS<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>        $HOME/.initia/config/config.toml
+</span></span><span style="display:flex;"><span>    echo -e <span style="color:#e6db74">&#34;\nLATEST_HEIGHT: </span>$LATEST_HEIGHT<span style="color:#e6db74">\nTRUST_HEIGHT: </span>$TRUST_HEIGHT<span style="color:#e6db74">\nTRUST_HASH: </span>$TRUST_HASH<span style="color:#e6db74">\nPEERS: </span>$PEERS<span style="color:#e6db74">\n\nALL IS FINE&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    echo -e <span style="color:#e6db74">&#34;\nError: One or more variables are empty. Please try again or change RPC\nExiting...\n&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><h3 id="4-move-priv_validator_statejson-back">4. Move priv_validator_state.json back</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mv $HOME/.initia/priv_validator_state.json.backup $HOME/.initia/data/priv_validator_state.json
+</span></span></code></pre></div><h3 id="5-start-the-node">5. Start the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart initiad <span style="color:#f92672">&amp;&amp;</span> sudo journalctl -u initiad -f -o cat
+</span></span></code></pre></div><p>You should see the following logs. It may take up to 5 minutes for the snapshot to be discovered. If doesn&rsquo;t work, try downloading <a href="#download-snapshot">snapshot</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">39</span>PM INF sync any module<span style="color:#f92672">=</span>statesync msg<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Discovering snapshots for 15s&#34;</span> server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">39</span>PM INF Discovered new snapshot format<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> hash<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;?^��I��</span><span style="color:#ae81ff">\r</span><span style="color:#e6db74">�=�O�E�?�CQD�6�</span><span style="color:#ae81ff">\x18</span><span style="color:#e6db74">�F:��</span><span style="color:#ae81ff">\x00</span><span style="color:#e6db74">6�&#34;</span> height<span style="color:#f92672">=</span><span style="color:#ae81ff">602000</span> module<span style="color:#f92672">=</span>statesync server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">39</span>PM INF Discovered new snapshot format<span style="color:#f92672">=</span><span style="color:#ae81ff">3</span> hash<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;%���</span><span style="color:#ae81ff">\x16\x03</span><span style="color:#e6db74">�T0�v�f�C��5�&lt;TlLb�5��l!�M&#34;</span> height<span style="color:#f92672">=</span><span style="color:#ae81ff">600000</span> module<span style="color:#f92672">=</span>statesync server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">42</span>PM INF VerifyHeader hash<span style="color:#f92672">=</span>CFC07DAB03CEB02F53273F5BDB6A7C16E6E02535B8A88614800ABA9C705D4AF7 height<span style="color:#f92672">=</span><span style="color:#ae81ff">602001</span> module<span style="color:#f92672">=</span>light server<span style="color:#f92672">=</span>node
+</span></span></code></pre></div><p>After some time you should see the following logs. It make take 5 minutes for the node to catch up the rest of the blocks</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-py" data-lang="py"><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">43</span>PM INF indexed block events height<span style="color:#f92672">=</span><span style="color:#ae81ff">602265</span> module<span style="color:#f92672">=</span>txindex server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">43</span>PM INF executed block height<span style="color:#f92672">=</span><span style="color:#ae81ff">602266</span> module<span style="color:#f92672">=</span>state num_invalid_txs<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> num_valid_txs<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">43</span>PM INF commit synced commit<span style="color:#f92672">=</span><span style="color:#ae81ff">436</span>F6D6D697449447B5B31313720323535203139203132392031353920313035203136352033352031353320313220353620313533203139352031372036342034372033352034372032333220373120313939203720313734203620313635203338203336203633203235203136332039203134395D3A39333039417D module<span style="color:#f92672">=</span>server
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">43</span>PM INF committed state app_hash<span style="color:#f92672">=</span><span style="color:#ae81ff">75</span>FF13819F69A523990C3899C311402F232FE847C707AE06A526243F19A30995 height<span style="color:#f92672">=</span><span style="color:#ae81ff">602266</span> module<span style="color:#f92672">=</span>state num_txs<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">43</span>PM INF indexed block events height<span style="color:#f92672">=</span><span style="color:#ae81ff">602266</span> module<span style="color:#f92672">=</span>txindex server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">43</span>PM INF executed block height<span style="color:#f92672">=</span><span style="color:#ae81ff">602267</span> module<span style="color:#f92672">=</span>state num_invalid_txs<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> num_valid_txs<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span> server<span style="color:#f92672">=</span>node
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>:<span style="color:#ae81ff">43</span>PM INF commit synced commit<span style="color:#f92672">=</span><span style="color:#ae81ff">436</span>F6D6D697449447B5B323437203134322032342031313620323038203631203138362032333920323238203138312032333920313039203336203420383720323238203236203738203637203133302032323220313431203438203337203235203133302037302032343020313631203233372031312036365D3A39333039427D module<span style="color:#f92672">=</span>server
+</span></span></code></pre></div><h3 id="6-check-the-synchronization-status">6. Check the synchronization status</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad status | jq -r .sync_info
+</span></span></code></pre></div><h3 id="7-disable-state-sync">7. Disable state sync</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sed -i.bak -e <span style="color:#e6db74">&#34;/\[statesync\]/,/^\[/{s/\(enable = \).*</span>$<span style="color:#e6db74">/\1false/}&#34;</span> $HOME/.initia/config/app.toml
+</span></span></code></pre></div><h2 id="download-fresh-addrbookjson">Download fresh addrbook.json</h2>
+<h3 id="1-stop-the-node-and-use-wget-to-download-the-file">1. Stop the node and use <code>wget</code> to download the file</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl stop initiad <span style="color:#f92672">&amp;&amp;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>wget -O $HOME/.initia/config/addrbook.json https://rpc-initia-testnet.trusted-point.com/addrbook.json
+</span></span></code></pre></div><h3 id="2-restart-the-node">2. Restart the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart initiad <span style="color:#f92672">&amp;&amp;</span> sudo journalctl -u initiad -f -o cat
+</span></span></code></pre></div><h3 id="3-check-the-synchronization-status">3. Check the synchronization status</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad status | jq -r .sync_info
+</span></span></code></pre></div><p>The file is being updated every 5 minutes</p>
+<h2 id="add-fresh-persistent-peers">Add fresh persistent peers</h2>
+<h3 id="1-extract-persistent_peers-from-our-endpoint">1. Extract persistent_peers from our endpoint</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>PEERS<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>curl -s --max-time <span style="color:#ae81ff">3</span> --retry <span style="color:#ae81ff">2</span> --retry-connrefused <span style="color:#e6db74">&#34;https://rpc-initia-testnet.trusted-point.com/peers.txt&#34;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$PEERS<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>    echo <span style="color:#e6db74">&#34;No peers were retrieved from the URL.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>    echo -e <span style="color:#e6db74">&#34;\nPEERS: &#34;</span>$PEERS<span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    sed -i <span style="color:#e6db74">&#34;s/^persistent_peers *=.*/persistent_peers = \&#34;</span>$PEERS<span style="color:#e6db74">\&#34;/&#34;</span> <span style="color:#e6db74">&#34;</span>$HOME<span style="color:#e6db74">/.initia/config/config.toml&#34;</span>
+</span></span><span style="display:flex;"><span>    echo -e <span style="color:#e6db74">&#34;\nConfiguration file updated successfully.\n&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fi</span>
+</span></span></code></pre></div><h3 id="2-restart-the-node-1">2. Restart the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart initiad <span style="color:#f92672">&amp;&amp;</span> sudo journalctl -u initiad -f -o cat
+</span></span></code></pre></div><h3 id="3-check-the-synchronization-status-1">3. Check the synchronization status</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad status | jq -r .sync_info
+</span></span></code></pre></div><p>Peers are being updated every 5 minutes</p>
+<h2 id="download-snapshot">Download Snapshot</h2>
+<h3 id="1-download-latest-snapshot-from-our-endpoint">1. Download latest snapshot from our endpoint</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://snapshots.kjnodes.com/initia-testnet/snapshot_latest.tar.lz4 -O latest_snapshot.tar.lz4
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># https://rpc-initia-testnet.trusted-point.com/latest_snapshot.tar.lz4 is under maintenance. Please use kjnode&#39;s one</span>
+</span></span></code></pre></div><h3 id="2-stop-the-node">2. Stop the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl stop initiad
+</span></span></code></pre></div><h3 id="3-backup-priv_validator_statejson">3. Backup priv_validator_state.json</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cp $HOME/.initia/data/priv_validator_state.json $HOME/.initia/priv_validator_state.json.backup
+</span></span></code></pre></div><h3 id="4-reset-db">4. Reset DB</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad tendermint unsafe-reset-all --home $HOME/.initia --keep-addr-book
+</span></span></code></pre></div><h3 id="5-extract-files-from-the-archive">5. Extract files from the archive</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lz4 -d -c ./latest_snapshot.tar.lz4 | tar -xf - -C $HOME/.initia
+</span></span></code></pre></div><h3 id="6-move-priv_validator_statejson-back">6. Move priv_validator_state.json back</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mv $HOME/.initia/priv_validator_state.json.backup $HOME/.initia/data/priv_validator_state.json
+</span></span></code></pre></div><h3 id="7-restart-the-node">7. Restart the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart initiad <span style="color:#f92672">&amp;&amp;</span> sudo journalctl -u initiad -f -o cat
+</span></span></code></pre></div><h3 id="8-check-the-synchronization-status">8. Check the synchronization status</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad status | jq -r .sync_info
+</span></span></code></pre></div><p>Snapshot is being updated every 3 hours</p>
+<h2 id="useful-commands">Useful commands</h2>
+<h3 id="check-node-status">Check node status</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad status | jq
+</span></span></code></pre></div><h3 id="query-your-validator">Query your validator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad q mstaking validator <span style="color:#66d9ef">$(</span>initiad keys show $WALLET_NAME --bech val -a<span style="color:#66d9ef">)</span> 
+</span></span></code></pre></div><h3 id="query-missed-blocks-counter--jail-details-of-your-validator">Query missed blocks counter &amp; jail details of your validator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad q slashing signing-info <span style="color:#66d9ef">$(</span>initiad tendermint show-validator<span style="color:#66d9ef">)</span>
+</span></span></code></pre></div><h3 id="unjail-your-validator">Unjail your validator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad tx slashing unjail --from $WALLET_NAME --gas<span style="color:#f92672">=</span><span style="color:#ae81ff">2000000</span> --fees<span style="color:#f92672">=</span>300000uinit -y
+</span></span></code></pre></div><h3 id="delegate-tokens-to-your-validator">Delegate tokens to your validator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad tx mstaking delegate <span style="color:#66d9ef">$(</span>initiad keys show $WALLET_NAME --bech val -a<span style="color:#66d9ef">)</span>  &lt;AMOUNT&gt;uinit --from $WALLET_NAME --gas<span style="color:#f92672">=</span><span style="color:#ae81ff">2000000</span> --fees<span style="color:#f92672">=</span>300000uinit -y
+</span></span></code></pre></div><h3 id="get-your-p2p-peer-address">Get your p2p peer address</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad status | jq -r <span style="color:#e6db74">&#39;&#34;\(.NodeInfo.id)@\(.NodeInfo.listen_addr)&#34;&#39;</span>
+</span></span></code></pre></div><h3 id="edit-your-validator">Edit your validator</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad tx mstaking edit-validator --website<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&lt;WEBSITE&gt;&#34;</span> --details<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&lt;DESCRIPTION&gt;&#34;</span> --moniker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&lt;NEW_MONIKER&gt;&#34;</span> --from<span style="color:#f92672">=</span>$WALLET_NAME --gas<span style="color:#f92672">=</span><span style="color:#ae81ff">2000000</span> --fees<span style="color:#f92672">=</span>300000uinit -y
+</span></span></code></pre></div><h3 id="send-tokens-between-wallets">Send tokens between wallets</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad tx bank send $WALLET_NAME &lt;TO_WALLET&gt; &lt;AMOUNT&gt;uinit --gas<span style="color:#f92672">=</span><span style="color:#ae81ff">2000000</span> --fees<span style="color:#f92672">=</span>300000uinit -y
+</span></span></code></pre></div><h3 id="query-your-wallet-balance">Query your wallet balance</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad q bank balances $WALLET_NAME
+</span></span></code></pre></div><h3 id="monitor-server-load">Monitor server load</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt install htop -y
+</span></span><span style="display:flex;"><span>htop
+</span></span></code></pre></div><h3 id="query-active-validators">Query active validators</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad q mstaking validators -o json --limit<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| jq <span style="color:#e6db74">&#39;.validators[] | select(.status==&#34;BOND_STATUS_BONDED&#34;)&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| jq -r <span style="color:#e6db74">&#39;.voting_power + &#34; - &#34; + .description.moniker&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| sort -gr | nl
+</span></span></code></pre></div><h3 id="query-inactive-validators">Query inactive validators</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>initiad q mstaking validators -o json --limit<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| jq <span style="color:#e6db74">&#39;.validators[] | select(.status==&#34;BOND_STATUS_UNBONDED&#34;)&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| jq -r <span style="color:#e6db74">&#39;.voting_power + &#34; - &#34; + .description.moniker&#39;</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>| sort -gr | nl
+</span></span></code></pre></div><h3 id="check-logs-of-the-node">Check logs of the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo journalctl -u initiad -f -o cat
+</span></span></code></pre></div><h3 id="restart-the-node">Restart the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl restart initiad
+</span></span></code></pre></div><h3 id="stop-the-node">Stop the node</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo systemctl stop initiad
+</span></span></code></pre></div><h3 id="delete-the-node-from-the-server">Delete the node from the server</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># !!! IF YOU HAVE CREATED A VALIDATOR, MAKE SURE TO BACKUP `priv_validator_key.json` file located in $HOME/.initia/config/ </span>
+</span></span><span style="display:flex;"><span>sudo systemctl stop initiad
+</span></span><span style="display:flex;"><span>sudo systemctl disable initiad
+</span></span><span style="display:flex;"><span>sudo rm /etc/systemd/system/initiad.service
+</span></span><span style="display:flex;"><span>rm -rf $HOME/.initia
+</span></span><span style="display:flex;"><span>sudo rm /usr/local/bin/initiad
+</span></span></code></pre></div><h3 id="example-grpc-usage">Example gRPC usage</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>wget https://github.com/fullstorydev/grpcurl/releases/download/v1.7.0/grpcurl_1.7.0_linux_x86_64.tar.gz
+</span></span><span style="display:flex;"><span>tar -xvf grpcurl_1.7.0_linux_x86_64.tar.gz
+</span></span><span style="display:flex;"><span>chmod +x grpcurl
+</span></span><span style="display:flex;"><span>./grpcurl  -plaintext  localhost:$GRPC_PORT list
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### MAKE SURE gRPC is enabled in app.toml</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># grep -A 3 &#34;\[grpc\]&#34; $HOME/.initia/config/app.toml</span>
+</span></span></code></pre></div><h3 id="example-rest-api-query">Example REST API query</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>curl localhost:$API_PORT/cosmos/mstaking/v1beta1/validators
+</span></span><span style="display:flex;"><span><span style="color:#75715e">### MAKE SURE API is enabled in app.toml</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># grep -A 3 &#34;\[api\]&#34; $HOME/.initia/config/app.toml</span>
+</span></span></code></pre></div>
+
+      </div>
+      <div class="container-footer">
+        <div class="footer">
+    Powered by <a href="https://gohugo.io/">Hugo</a> +
+    <a href="https://github.com/mrmierzejewski/hugo-theme-console/">Console Theme</a>. 
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>

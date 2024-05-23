@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Cryptos on woogieboogie.dev</title>
+    <title>Crypto on woogieboogie-jl</title>
     <link>https://woogieboogie-jl.github.io/crypto/</link>
-    <description>Recent content in Cryptos on woogieboogie.dev</description>
+    <description>Recent content in Crypto on woogieboogie-jl</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://woogieboogie-jl.github.io/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Sat, 04 May 2024 02:51:24 +0900</lastBuildDate>
+    <atom:link href="https://woogieboogie-jl.github.io/crypto/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>NodeRunners: Initia Node Initiation</title>
+      <link>https://woogieboogie-jl.github.io/crypto/noderunner-initia-setup-guide/</link>
+      <pubDate>Sat, 04 May 2024 02:51:24 +0900</pubDate>
+      <guid>https://woogieboogie-jl.github.io/crypto/noderunner-initia-setup-guide/</guid>
+      <description>Navigation Menu Hardware requirements TrustedPoint Services Installation guide 1. Install required packages 2. Install Go 3. Install initia binary 4. Set up variables 5. Initialize the node 6. Download genesis.json 7. Add seeds and peers to the config.toml 8. Change ports (Optional) 9.</description>
+    </item>
   </channel>
 </rss>
